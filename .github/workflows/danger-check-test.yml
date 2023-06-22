@@ -1,43 +1,18 @@
 name: Approve Lock
 
-on: [push]
-env:
-  DAY_OF_WEEK: Monday
+on: [ push ]
 
-jobs:
-  greeting_job:
-    runs-on: ubuntu-latest
-    env:
-      Greeting: Hello
-    steps:
-      - name: Say Hello Mona it's Monday
-        if: ${{ env.DAY_OF_WEEK == 'Monday' }}
-        run: echo "$Greeting $First_Name. Today is $DAY_OF_WEEK!"
-        env:
-          First_Name: Mona
+  jobs:
+    check-file-changes:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Check File Changes
+          id: file_changes
+          run: 'echo "::set-output name=changes::$(git --no-pager diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }})"'
 
-
-
-
-
-
-
-
-
-
-
-
-            jobs:
-              check-file-changes:
-                runs-on: ubuntu-latest
-                steps:
-                  - name: Check File Changes
-                    id: file_changes
-                    run: 'echo "::set-output name=changes::$(git --no-pager diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }})"'
-
-                  - name: test
-                    if: File_Change.includes("com/example/github_action_test_test/MainActivity2")
-                    run: |
-                      echo "$File_Change"
-                    env:
-                      File_Change: steps.file_changes.outputs.changes
+        - name: test
+          if: File_Change.includes("com/example/github_action_test_test/MainActivity2")
+          run: |
+            echo "$File_Change"
+          env:
+            File_Change: steps.file_changes.outputs.changes
