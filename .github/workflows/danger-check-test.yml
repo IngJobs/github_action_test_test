@@ -11,7 +11,7 @@ jobs:
         run: 'echo "::set-output name=changes::$(git --no-pager diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }})"'
 
       - name: test
-        if: ${{ env.File_Change.includes('com/example/github_action_test_test/MainActivity2') }}
+        if: ${{ File_Change.includes('com/example/github_action_test_test/MainActivity2') }}
         run: |
           -f Hello!
         env:
