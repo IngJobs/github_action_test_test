@@ -2,11 +2,12 @@ name: Approve Lock
 
 on: [push]
 
+env:
+  File_Change: { steps.file_changes.outputs.changes }
+
 jobs:
   check-file-changes:
     runs-on: ubuntu-latest
-    env:
-      File_Change: { steps.file_changes.outputs.changes }
     steps:
       - name: Check File Changes
         id: file_changes
