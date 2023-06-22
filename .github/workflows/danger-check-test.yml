@@ -12,7 +12,7 @@ jobs:
         run: 'echo "::set-output name=changes::$(git --no-pager diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }})"'
 
       - name: test
-        if: !${{ steps.file_changes.outputs.changes }}.includes('com/example/github_action_test_test/MainActivity')
+        if: ${{ steps.file_changes.outputs.changes }}.includes('com/example/github_action_test_test/MainActivity2')
         run: |
           echo Hello!
 
