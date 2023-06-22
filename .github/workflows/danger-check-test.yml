@@ -16,18 +16,18 @@ jobs:
         uses: actions/github-script@v4
         with:
           script: |
-            const filesChanged = ${{ steps.file_changes.outputs.changes }};
-            const lockApproved = filesChanged.includes('com/example/github_action_test_test/MainActivity');
+            const filesChanged = ${{ steps.file_changes.outputs.changes }}
+            const lockApproved = filesChanged.includes('com/example/github_action_test_test/MainActivity')
             if (lockApproved) {
-              console.log('File changes detected. Approve lock activated.');
-              const { owner, repo, number } = context.issue;
+              console.log('File changes detected. Approve lock activated.')
+              const { owner, repo, number } = context.issue
               github.pulls.createReview({
                 owner: owner,
                 repo: repo,
                 pull_number: number,
                 event: 'REQUEST_CHANGES',
                 body: 'Approval locked due to file changes.'
-              });
+              })
             } else {
-              console.log('No file changes detected. Skipping approve lock.');
+              console.log('No file changes detected. Skipping approve lock.')
             }
