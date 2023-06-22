@@ -1,5 +1,6 @@
 name: Approve Lock
 
+on: [push]
 env:
   DAY_OF_WEEK: Monday
 
