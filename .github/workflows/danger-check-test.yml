@@ -1,6 +1,10 @@
 name: Approve Lock
 
-on: [pull_request]
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
 
 jobs:
   check-file-changes:
@@ -11,11 +15,11 @@ jobs:
         run: 'echo "::set-output name=changes::$(git --no-pager diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }})"'
 
       - name: test
-        if: "$File_Changes.includes('com/example/github_action_test_test/MainActivity2')"
+        if: ${{ contains(steps.file_changes.outputs.changes, 'com/example/github_action_test_test/MainActivity2') }}
         run: |
-          echo "$File_Change"
+          echo "File_Changes
         env:
-          File_Change: steps.file_changes.outputs.changes
+          File_Change: ${{ steps.file_changes.outputs.changes }}
 
 #        with:
 #          script: |
