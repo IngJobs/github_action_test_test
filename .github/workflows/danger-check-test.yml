@@ -13,7 +13,7 @@ jobs:
       - name: test
 #        if: ${{ File_Change.includes('com/example/github_action_test_test/MainActivity2') }}
         run: |
-          echo $File_Change
+          echo "$File_Change"
         env:
           File_Change: steps.file_changes.outputs.changes
 
